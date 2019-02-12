@@ -3,94 +3,88 @@ class MeterConvertor
 {
 	float meters;
 public:
+	double Ar[10] = { 1, 0.9144, 0.3048, 1609.34,0.7112, 2.1337 };
+	char names[6][15] ={ " meter(s)", " YARD(s)!!!!"," foot(s)"," mile(s)", " arshin(s)", " sazhen(s)"};
 	void SetMeters(float meters1) 
 	{
 		meters = meters1;
 	}
-	float MetersToYards(float meters)
+	float GetMeters(float meters1)
+	{
+		meters1 = meters;
+	}
+	void SetNames(int choice)
+	{
+		std::cout << names[choice];
+	}
+	int ChooseUnit ()
+	{
+		int choice;
+		std :: cout << "1 - Yards\n2 - Foot\n3 - Mile\n4 - Arshin\n5 - Sazhen\n";
+		std :: cin >> choice;
+		return choice;
+	}
+	float MetersToSOMETHING(int choice)
 	{
 		float meters1; 
-		meters1 =  meters/ 0.9144;
+		meters1 =  meters/ Ar[choice];
 		return meters1;
 	}
-	float MetersToFoot(float meters)
+	MeterConvertor()
 	{
-		float meters1;
-		meters1 =  meters/0.3048;
-		return meters1;
+		meters = 0;
 	}
-	float MetersToArshin(float meters)
+	MeterConvertor(float n)
 	{
-		float meters1;
-		meters1 = meters/ 0.7112;
-		return meters1;
-	}
-	float MetersToSazhen(float meters)
-	{
-		float meters1;
-		meters1 = meters/ 2.1337;
-		return meters1;
-	}
-	float MetersToMile(float meters)
-	{
-		float meters1;
-		meters1 = meters/ 1609.34;
-		return meters1;
+		meters = n;
 	}
 };
 int main()
 {
 	using namespace std;
 	int a;
+	int choice2 = 0;
 	char choice1;
-	float x, y, z, w;
-	MeterConvertor Metr;
-	cout << "Enter the lehgth";
+	bool flag1 = 1;
+	float x, y;
+	cout << "Enter the length\n";
 	cin >> x;
-	cout << "Press 1 to reset length\n";
-	cout << "Press 2 to dispay lehgth in current unit\n";
-	cout << "Press 3 to convert unit\n";
+	MeterConvertor Metr(x);
+	while(flag1)
+	{ 
+	cout << "Press 1 to reset length\n"  << "Press 2 to dispay length in meters\n" << "Press 3 to convert unit\n" << "Press 4 to exit\n";
 	cin >> choice1;
+	y = x;
 	switch (choice1)
 	{
 	case '1':
 	{
+		cout << "Enter the length\n";
 		cin >> x;
+		cout << endl;
 		break;
 	}
 	case '2':
 	{
-		cout << x;
+		cout << x << " meter(s)" << endl;
 		break;
 	}
 	case '3':
 	{
-	
+		choice2 = Metr.ChooseUnit();
+		y = Metr.MetersToSOMETHING(choice2);
+		cout << y;
+		Metr.SetNames(choice2);
+		cout << endl;
+		break;
+	}
+	case '4':
+	{
+		flag1 = 0;
+		break;
 	}
 	}
-	Metr.SetMeters(x);
-	y = Metr.MetersToYards(x);
-	cout << y;
-	cout << " YYAAArds!!!";
-	cout << endl;
-	y = Metr.MetersToMile(x);
-	cout << y;
-	cout << " Miles!!!";
-	cout << endl;
-	y = Metr.MetersToSazhen(x);
-	cout << y;
-	cout << " Sazhens";
-	cout << endl;
-	y = Metr.MetersToFoot(x);
-	cout << y;
-	cout << " Foots";
-	cout << endl;
-	y = Metr.MetersToArshin(x);
-	cout << y;
-	cout << " Arshins";
-	cout << endl;
-	cout << "CONVERTOR";
-	cout << endl;
+	}
 	cin >> a;
 	return 0;
 }
