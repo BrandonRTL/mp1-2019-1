@@ -20,7 +20,7 @@ public:
 	int ChooseUnit ()
 	{
 		int choice;
-		std :: cout << "1 - Yards\n2 - Foot\n3 - Mile\n4 - Arshin\n5 - Sazhen\n";
+		std :: cout << "1 - Yard\n2 - Foot\n3 - Mile\n4 - Arshin\n5 - Sazhen\n";
 		std :: cin >> choice;
 		return choice;
 	}
@@ -85,6 +85,5 @@ int main()
 	}
 	}
 	}
-	cin >> a;
 	return 0;
 }
