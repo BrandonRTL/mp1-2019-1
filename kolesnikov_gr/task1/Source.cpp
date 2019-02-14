@@ -2,9 +2,9 @@
 class MeterConvertor
 {
 	float meters;
-public:
 	double Ar[10] = { 1, 0.9144, 0.3048, 1609.34,0.7112, 2.1337 };
-	char names[6][15] ={ " meter(s)", " YARD(s)!!!!"," foot(s)"," mile(s)", " arshin(s)", " sazhen(s)"};
+	char names[6][15] = { " meter(s)", " YARD(s)!!!!"," foot(s)"," mile(s)", " arshin(s)", " sazhen(s)" };
+public:
 	void SetMeters(float meters1) 
 	{
 		meters = meters1;
@@ -62,6 +62,8 @@ int main()
 		cout << "Enter the length\n";
 		cin >> x;
 		cout << endl;
+		Metr.SetMeters(x);
+		y = x;
 		break;
 	}
 	case '2':
