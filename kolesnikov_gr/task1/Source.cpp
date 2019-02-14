@@ -5,29 +5,46 @@ class MeterConvertor
 	double Ar[10] = { 1, 0.9144, 0.3048, 1609.34,0.7112, 2.1337 };
 	char names[6][15] = { " meter(s)", " YARD(s)!!!!"," foot(s)"," mile(s)", " arshin(s)", " sazhen(s)" };
 public:
-	void SetMeters(float meters1) 
+	void SetMeters(float meters1)
 	{
 		meters = meters1;
 	}
-	float GetMeters(float meters1)
-	{
-		meters1 = meters;
-	}
-	void SetNames(int choice)
+	void PrintNames(int choice)
 	{
 		std::cout << names[choice];
 	}
-	int ChooseUnit ()
+	float GetMeters(float meters1)
 	{
-		int choice;
-		std :: cout << "1 - Yard\n2 - Foot\n3 - Mile\n4 - Arshin\n5 - Sazhen\n";
-		std :: cin >> choice;
-		return choice;
+		meters = meters1;
 	}
-	float MetersToSOMETHING(int choice)
+	float MetersToYards()
 	{
-		float meters1; 
-		meters1 =  meters/ Ar[choice];
+		float meters1;
+		meters1 = meters / Ar[1];
+		return meters1;
+	}
+	float MetersToFoots()
+	{
+		float meters1;
+		meters1 = meters / Ar[2];
+		return meters1;
+	}
+	float MetersToMiles()
+	{
+		float meters1;
+		meters1 = meters / Ar[3];
+		return meters1;
+	}
+	float MetersToArshins()
+	{
+		float meters1;
+		meters1 = meters / Ar[4];
+		return meters1;
+	}
+	float MetersToSazhens()
+	{
+		float meters1;
+		meters1 = meters / Ar[5];
 		return meters1;
 	}
 	MeterConvertor()
@@ -42,9 +59,8 @@ public:
 int main()
 {
 	using namespace std;
-	int a;
 	int choice2 = 0;
-	char choice1;
+	char choice1,choice3;
 	bool flag1 = 1;
 	float x, y;
 	cout << "Enter the length\n";
@@ -73,10 +89,39 @@ int main()
 	}
 	case '3':
 	{
-		choice2 = Metr.ChooseUnit();
-		y = Metr.MetersToSOMETHING(choice2);
+		std::cout << "1 - Yard\n2 - Foot\n3 - Mile\n4 - Arshin\n5 - Sazhen\n";
+		std::cin >> choice3;
+		switch (choice3)
+		{
+		case '1':
+			{
+			y = Metr.MetersToYards();
+			break;
+			}
+		case '2':
+		{
+			y = Metr.MetersToFoots();
+			break;
+		}
+		case '3':
+		{
+			y = Metr.MetersToMiles();
+			break;
+		}
+		case '4':
+		{
+			y = Metr.MetersToArshins();
+			break;
+		}
+		case '5':
+		{
+			y = Metr.MetersToSazhens();
+			break;
+		}
+		}
 		cout << y;
-		Metr.SetNames(choice2);
+		choice2 = int(choice3)-48;
+		Metr.PrintNames(choice2);
 		cout << endl;
 		break;
 	}
