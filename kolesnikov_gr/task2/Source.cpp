@@ -1,24 +1,31 @@
 #include  <iostream>
-class DympMass
+class DynamArr
 {
 	int N;
 	double *Array;
 public:
-	DympMass(int n=13)
+	DynamArr()
+	{
+		N = 13;
+		Array = new double[N];
+		for (int i = 0; i < N; i++)
+			Array[i] = 13;
+	}
+	DynamArr (const int n)
 	{
 		N = n;
 		Array = new double[N];
 		for (int i = 0; i < N; i++)
 			Array[i] = 13;
 	}
-	DympMass(const DympMass &Arr)
+	DynamArr(const DynamArr &Arr)
 	{
 		N = Arr.N;
 		Array = new double[N];
 		for (int i = 0; i < N; i++)
 			Array[i] = Arr.Array[i];
 	}
-	DympMass& operator=(const DympMass &Arr)
+	DynamArr& operator=(const DynamArr &Arr)
 	{
 		N = Arr.N;
 		delete[] Array;
@@ -29,7 +36,6 @@ public:
 	}
 	void SetN(int n)
 	{
-		delete[] Array;
 		N = n;
 	}
 	int GetN (int n)
@@ -44,7 +50,7 @@ public:
 			std::cin >> Array[i];
 		}
 	}
-	void ArrayInByNumber(int n)
+	void ArrayInByIndex(int n)
 	{
 		double a;
 		std::cout << "Enter the " << n << "st/nd/rd/th element" << std::endl;
@@ -55,50 +61,40 @@ public:
 	{
 		return Array[n];
 	}
-	void FindingMinMax()
+	void FindingMin()
 	{
 		int a;
-		double MinMax;
-		std::cout << "1 to find minimum\n2 to find maximum\n";
-		std::cin >> a;
-		switch (a)
-		{
-			case 1:
+		int i = 0;
+		double Min = Array[0];
+		for (i = 0; i <N; i++)
 			{
-				MinMax = Array[0];
-				for (int i = 0; i < N; i++)
-				{
-					if (Array[i] <= MinMax)
-						MinMax = Array[i];
-				}
-				std::cout << "The minimum is " << MinMax << "\n";
-				break;
+				if (Min>Array[i])
+				Min = Array[i];
 			}
-			case 2:
-			{
-				MinMax = Array[0];
-				for (int i = 0; i < N; i++)
-				{
-					if (Array[i] >= MinMax)
-						MinMax = Array[i];
-				}
-				std::cout << "The maximum is " << MinMax << "\n";
-				break;
-			}
-		}
+		std::cout << "And the minimum is " << Min << std::endl;
+
 	}
-	void SortedCheck()
+	void AscendingSortedCheck()
 	{
-		for (int i = 0; i < N - 1; i++)
+		int i;
+		for (i = 0; i < N - 1; i++)
 		{
 			if (Array[i] > Array[i + 1])
 			{
 				std::cout << "Array is not sorted" <<std::endl;
 				return;
-			}
+			} 
 		}
-		std::cout << "Array is  sorted" << std::endl;
-		for (int i = 0; i < N - 1; i++)
+		if (i == N - 1)
+		{
+			std::cout << "Array is sorted" << std::endl;
+			return;
+		}
+	}
+	void DescendingSortedCheck()
+	{
+		int i;
+		for (i = 0; i < N - 1; i++)
 		{
 			if (Array[i] < Array[i + 1])
 			{
@@ -106,28 +102,44 @@ public:
 				return;
 			}
 		}
-		std::cout << "Array is sorted" << std::endl;
+		if (i == N - 1)
+		{
+			std::cout << "Array is sorted";
+			return;
+		}
 	}
-	void SubMassive()
+	void OddSubArray()
 	{
-
+		double *SubAr;
+		SubAr = new double[N / 2 + 1];
+		int i;
+		for (i = 0; i < N/2;i++)
+			SubAr[i] = Array[2*i + 1];
+		for (i = 0; i < N/2; i++)
+			std::cout << SubAr[i] << " ";
+		delete[] SubAr;
+	}
+	~DynamArr()
+	{
+		delete[] Array;
 	}
 };
 int main()
 {
 	using namespace std;
 	int a,b,c,d,e,f;
-	DympMass TheGood;
-	DympMass TheBad;
-	DympMass TheUnsorted;
+	DynamArr TheGood;
+	cout << "Number of elements";
 	cin >> b;
 	TheGood.SetN(b); 
 	TheGood.FullArrayIn();
-	cout << "Position to change element\n";
+	cout << "Position of the element to set/change(count starts with zero)\n";
 	cin >> c;
-	TheGood.ArrayInByNumber(c);
-	TheGood.FindingMinMax();
-	TheGood.SortedCheck();
+	TheGood.ArrayInByIndex(c);
+	TheGood.AscendingSortedCheck();
+	TheGood.FindingMin();
+	cout << "SUB ARRAY: ";
+	TheGood.OddSubArray();
 	cin >> a;
 	return 0;
 }
