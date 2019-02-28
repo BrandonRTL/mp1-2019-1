@@ -31,13 +31,66 @@ public:
 		RusWord[WordCount] =  B;
 		WordCount++;
 	}
+	void TranslationChange(string A, string B)
+	{
+		for (int i = 0; i < WordCount; i++)
+		{
+			if (A == EngWord[i])
+				RusWord[i] = B;
+		}
+	}
+	string GetTranslation(string A)
+	{
+		for (int i = 0; i < WordCount; i++)
+		{
+			if (A == EngWord[i])
+				return RusWord[i];
+		}
+		return 0;
+	}
+	bool TranslationCheck(string A)
+	{
+		bool TransCheck = 0;
+		for (int i = 0; i < WordCount; i++)
+		{
+			if (A == EngWord[i])
+				TransCheck = 1;
+		}
+		return TransCheck;
+	}
+	int GetWordCount()
+	{
+		return WordCount;
+	}
+	void FileSave()
+	{
+
+	}
+	TransDict FileRead()
+	{
+
+	}
 };
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	TransDict A;
+	int count;
+	string b, c, d;
+	bool Tr;
 	A.DictPrint();
+	count = A.GetWordCount();
+	cout << count << endl;
+	A.TranslationChange("Here", "Тут");
+	A.WordAdd("Cat", "Кошка");
+	A.DictPrint();
+	b = A.GetTranslation("Here");
+	cout << b << endl;;
+	Tr = A.TranslationCheck("Here");
+	cout << Tr << endl;
+	count = A.GetWordCount();
+	cout << count << endl;
 	int a;
 	cin >> a;
 	return 0;
