@@ -11,7 +11,7 @@ public:
 		for (int i = 0; i < N; i++)
 			Array[i] = 13;
 	}
-	DynamArr (int n)
+	DynamArr(int n)
 	{
 		N = n;
 		Array = new double[N];
@@ -27,7 +27,7 @@ public:
 	}
 	DynamArr& operator=(const DynamArr &Arr)
 	{
-		if (this != &Arr) 
+		if (this != &Arr)
 		{
 			N = Arr.N;
 			delete[] Array;
@@ -37,23 +37,25 @@ public:
 		}
 		return *this;
 	}
+	DynamArr OddSubArray()
+	{
+		DynamArr C;
+		C.N = N / 2 + 1;
+		C.Array = new double[N / 2 + 1];
+		int i;
+		for (i = 0; i < N / 2; i++)
+			C.Array[i] = Array[2 * i + 1];
+		return C;
+	}
 	void SetN(int n)
 	{
 		delete[] Array;
 		N = n;
 		Array = new double[N];
 	}
-	int GetN (int n)
+	int GetN(int n)
 	{
 		N = n;
-	}
-	void FullArrayIn()
-	{
-		for (int i = 0; i < N; i++)
-		{
-			std::cout << "Enter the "<< i <<"st/nd/rd/th element"<< std::endl;
-			std::cin >> Array[i];
-		}
 	}
 	void ArrayInByIndex(int n, double a)
 	{
@@ -69,10 +71,10 @@ public:
 		int i = 0;
 		double Min = Array[0];
 		for (i = 0; i <N; i++)
-			{
-				if (Min>Array[i])
+		{
+			if (Min>Array[i])
 				Min = Array[i];
-			}
+		}
 		return Min;
 	}
 	bool AscendingSortedCheck()
@@ -84,7 +86,7 @@ public:
 			if (Array[i] > Array[i + 1])
 			{
 				return SortCheck;
-			} 
+			}
 		}
 		if (i == N - 1)
 		{
@@ -109,17 +111,6 @@ public:
 			return SortCheck;
 		}
 	}
-	void OddSubArray()
-	{
-		double *SubAr;
-		SubAr = new double[N / 2 + 1];
-		int i;
-		for (i = 0; i < N/2;i++)
-			SubAr[i] = Array[2*i + 1];
-		for (i = 0; i < N/2; i++)
-			std::cout << SubAr[i] << " ";
-		delete[] SubAr;
-	}
 	~DynamArr()
 	{
 		delete[] Array;
@@ -128,20 +119,20 @@ public:
 int main()
 {
 	using namespace std;
-	int a,b,c,d,e,f;
+	int a, b, c, d, e, f;
 	double N = 1, Minimum;
-	DynamArr TheGood;
+	DynamArr TheGood, TheSubArray;
 	cout << "Number of elements";
 	cin >> b;
-	TheGood.SetN(b); 
-	TheGood.FullArrayIn();
-	cout << "Position of the element to set/change(count starts with zero)\n";
-	cin >> c;
+	TheGood.SetN(b);
+    cout << "Position of the element to set/change(count starts with zero)\n";
+    cin >> c;
 	TheGood.ArrayInByIndex(c, N);
 	e = TheGood.AscendingSortedCheck();
 	Minimum = TheGood.FindingMin();
+	cout << Minimum;
 	cout << "SUB ARRAY: ";
-	TheGood.OddSubArray();
+	TheSubArray = TheGood.OddSubArray();
 	cin >> a;
 	return 0;
 }
