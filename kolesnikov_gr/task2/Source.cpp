@@ -41,6 +41,7 @@ public:
 	{
 		DynamArr C;
 		C.N = N / 2 + 1;
+		delete[] C.Array;
 		C.Array = new double[N / 2 + 1];
 		int i;
 		for (i = 0; i < N / 2; i++)
