@@ -1,12 +1,14 @@
 #include  <iostream>
 #include <string>  
 #include <clocale> 
+#include <fstream>
 using namespace std;
 class TransDict
 {
 std::string RusWord[100];
 std::string EngWord[100];
 int WordCount = 0;
+ofstream File;
 public:
 	TransDict()
 	{
@@ -25,13 +27,13 @@ public:
 			std::cout << EngWord[i] << "-" << RusWord[i] << endl;
 		}
 	}
-	void WordAdd(string A, string B)
+	void AddWord(string A, string B)
 	{
 		EngWord[WordCount] =  A;
 		RusWord[WordCount] =  B;
 		WordCount++;
 	}
-	void TranslationChange(string A, string B)
+	void ChangeTranslation(string A, string B)
 	{
 		for (int i = 0; i < WordCount; i++)
 		{
@@ -62,35 +64,58 @@ public:
 	{
 		return WordCount;
 	}
-	void FileSave()
+	void SaveFile(string FileName) //Наверное, расширение файла не нужно, но тут как бы тонкая грань, поэтому пусть будет txt
 	{
-
+		ofstream File;
+		File.open(FileName+".txt");
+		for (int i = 0; i < WordCount; i++)
+		{
+			File << EngWord[i] << " " << RusWord[i] << endl;
+		}
+		fclose;
 	}
-	TransDict FileRead()
+	TransDict ReadFile(string FileName)
 	{
-
+		ifstream File;
+		File.open(FileName + ".txt");
+		TransDict FromFile;
+		for (int i = 0; !File.eof(); i++)
+		{
+			File >> FromFile.EngWord[i] >> FromFile.RusWord[i];
+		//	File.seekg
+		}
+		return FromFile;
 	}
 };
 
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	TransDict A;
+	TransDict A, FromFile;
 	int count;
 	string b, c, d;
 	bool Tr;
 	A.DictPrint();
+	string FileName = "Dictionary";
 	count = A.GetWordCount();
 	cout << count << endl;
-	A.TranslationChange("Here", "Тут");
-	A.WordAdd("Cat", "Кошка");
+	//A.SaveFile(FileName);
+	A.ChangeTranslation("Here", "Тут");
+	A.AddWord("Cat", "Кошка");
 	A.DictPrint();
 	b = A.GetTranslation("Here");
 	cout << b << endl;;
+	FileName = "Dictionary1";
 	Tr = A.TranslationCheck("Here");
 	cout << Tr << endl;
 	count = A.GetWordCount();
 	cout << count << endl;
+    A.SaveFile(FileName);
+	//FromFile = A.ReadFile(FileName);
+	//Tr = FromFile.TranslationCheck("Beltalowda");
+	//b = FromFile.GetTranslation("Beltalowda");
+	//cout << b;
+	//cout << Tr;
 	int a;
 	cin >> a;
 	return 0;
