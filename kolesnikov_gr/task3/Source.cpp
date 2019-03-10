@@ -8,7 +8,6 @@ class TransDict
 	std::string RusWord[100];
 	std::string EngWord[100];
 	int WordCount = 0;
-	ofstream File;
 public:
 	TransDict()
 	{
