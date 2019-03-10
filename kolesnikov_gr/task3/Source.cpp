@@ -5,10 +5,10 @@
 using namespace std;
 class TransDict
 {
-std::string RusWord[100];
-std::string EngWord[100];
-int WordCount = 0;
-ofstream File;
+	std::string RusWord[100];
+	std::string EngWord[100];
+	int WordCount = 0;
+	ofstream File;
 public:
 	TransDict()
 	{
@@ -29,8 +29,8 @@ public:
 	}
 	void AddWord(string A, string B)
 	{
-		EngWord[WordCount] =  A;
-		RusWord[WordCount] =  B;
+		EngWord[WordCount] = A;
+		RusWord[WordCount] = B;
 		WordCount++;
 	}
 	void ChangeTranslation(string A, string B)
@@ -67,23 +67,27 @@ public:
 	void SaveFile(string FileName) //Наверное, расширение файла не нужно, но тут как бы тонкая грань, поэтому пусть будет txt
 	{
 		ofstream File;
-		File.open(FileName+".txt");
+		File.open(FileName + ".txt");
 		for (int i = 0; i < WordCount; i++)
 		{
 			File << EngWord[i] << " " << RusWord[i] << endl;
 		}
-		fclose;
+		File.close();
 	}
 	TransDict ReadFile(string FileName)
 	{
 		ifstream File;
+		int i = 0;
 		File.open(FileName + ".txt");
 		TransDict FromFile;
-		for (int i = 0; !File.eof(); i++)
+		while (!File.eof()) 
 		{
-			File >> FromFile.EngWord[i] >> FromFile.RusWord[i];
-		//	File.seekg
+				File >> FromFile.EngWord[i] >> FromFile.RusWord[i];
+				i++;
 		}
+		FromFile.WordCount = i;
+		cout << endl << i << endl;
+		File.close();
 		return FromFile;
 	}
 };
@@ -110,12 +114,12 @@ int main()
 	cout << Tr << endl;
 	count = A.GetWordCount();
 	cout << count << endl;
-    A.SaveFile(FileName);
-	//FromFile = A.ReadFile(FileName);
-	//Tr = FromFile.TranslationCheck("Beltalowda");
-	//b = FromFile.GetTranslation("Beltalowda");
-	//cout << b;
-	//cout << Tr;
+	//  A.SaveFile(FileName);
+	FromFile = A.ReadFile(FileName);
+	Tr = FromFile.TranslationCheck("Beltalowda");
+    b = FromFile.GetTranslation("Beltalowda");
+    cout << b;
+	cout << Tr;
 	int a;
 	cin >> a;
 	return 0;
