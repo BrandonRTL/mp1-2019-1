@@ -12,10 +12,10 @@ class TransDict
 public:
 	TransDict()
 	{
-		WordCount= 0;
+		WordCount = 0;
 	}
 	/*void DictPrint() // Метод для тестов(!)
-	{ 
+	{
 		for (int i = 0; i < WordCount; i++)
 		{
 			std::cout << EngWord[i] << "-" << RusWord[i] << endl;
@@ -68,7 +68,7 @@ public:
 		}
 		File.close();
 	}
-	TransDict ReadFile(string FileName) //Чтение из файла (7)
+	TransDict ReadFile(string FileName) //Чтение из файла(7)
 	{
 		ifstream File;
 		int i = 0;
@@ -76,12 +76,12 @@ public:
 		TransDict FromFile;
 		string RusWords;
 		string EngWords;
-		while (!File.eof()) 
+		while (!File.eof())
 		{
-				File >> EngWords >> RusWords;
-				FromFile.EngWord.push_back(EngWords);
-				FromFile.RusWord.push_back(RusWords);
-				i++;
+			File >> EngWords >> RusWords;
+			FromFile.EngWord.push_back(EngWords);
+			FromFile.RusWord.push_back(RusWords);
+			i++;
 		}
 		FromFile.WordCount = i;
 		cout << endl << i << endl;
@@ -97,7 +97,7 @@ int main()
 	int count;
 	string b, c, d;
 	bool Tr;
-	//A.DictPrint();
+//	A.DictPrint();
 	string FileName = "Dictionary1";
 	count = A.GetWordCount();
 	cout << count << endl;
@@ -107,7 +107,7 @@ int main()
 	A.AddWord("Rat", "Крыска");
 	A.AddWord("Valentina", "Писанина");
 	A.SaveFile(FileName);
-	//A.DictPrint();
+//	A.DictPrint();
 	b = A.GetTranslation("Cat");
 	cout << b << endl;
 	count = A.GetWordCount();
@@ -117,11 +117,11 @@ int main()
 	cout << Tr << endl;
 //	count = A.GetWordCount();
 //	cout << count << endl;
-	//  A.SaveFile(FileName);
-    FromFile = A.ReadFile(FileName);
+//  A.SaveFile(FileName);
+	FromFile = A.ReadFile(FileName);
 	Tr = FromFile.TranslationCheck("Beltalowda");
-    b = FromFile.GetTranslation("Dog");
-    cout << b;
+	b = FromFile.GetTranslation("Dog");
+	cout << b;
 	cout << Tr;
 	cout << FromFile.GetWordCount() << endl;
 	int a;
