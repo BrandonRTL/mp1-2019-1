@@ -2,63 +2,68 @@
 #include <string>  
 #include <clocale> 
 #include <fstream>
-#include <vector>
 using namespace std;
 class TransDict
 {
-	vector<string> RusWord;
-	vector<string> EngWord;
-	int WordCount;
+	std::string RusWord[100];
+	std::string EngWord[100];
+	int WordCount = 0;
 public:
 	TransDict()
 	{
-		WordCount = 0;
+		EngWord[0] = "No";
+		EngWord[1] = "Words";
+		EngWord[2] = "Here";
+		RusWord[0] = "Нет";
+		RusWord[1] = "Слова";
+		RusWord[2] = "Здесь";
+		WordCount = 3;
 	}
-	/*void DictPrint() // Метод для тестов(!)
+	/*void DictPrint()
 	{
-		for (int i = 0; i < WordCount; i++)
-		{
-			std::cout << EngWord[i] << "-" << RusWord[i] << endl;
-		}
+	for (int i = 0; i < WordCount; i++)
+	{
+	std::cout << EngWord[i] << "-" << RusWord[i] << endl;
+	}
 	}*/
-	void AddWord(string A, string B) //Добавление  слова(1)
+	void AddWord(string A, string B)
 	{
-		EngWord.push_back(A);
-		RusWord.push_back(B);
+		EngWord[WordCount] = A;
+		RusWord[WordCount] = B;
 		WordCount++;
 	}
-	void ChangeTranslation(string A, string B) //Изменение перевода(2)
+	void ChangeTranslation(string _EngWord, string _RusWord)
 	{
 		for (int i = 0; i < WordCount; i++)
 		{
-			if (A == EngWord[i])
-				RusWord[i] = B;
+			if (_EngWord == EngWord[i])
+				RusWord[i] = _RusWord;
 		}
 	}
-	string GetTranslation(string A) // Узнавание перевода(3)
+	string GetTranslation(string A)
 	{
 		for (int i = 0; i < WordCount; i++)
 		{
 			if (A == EngWord[i])
 				return RusWord[i];
 		}
-		return 0;
+		return "";
 	}
-	bool TranslationCheck(string A) //Проверка наличия перевода(4)
+	bool TranslationCheck(string A)
 	{
-		bool TransCheck = 0;
+		bool TransCheck = false;
 		for (int i = 0; i < WordCount; i++)
 		{
 			if (A == EngWord[i])
-				TransCheck = 1;
+				TransCheck = true;
 		}
 		return TransCheck;
 	}
-	int GetWordCount() //Узнать, сколько слов в  словаре(5)
+	int GetWordCount()
 	{
 		return WordCount;
 	}
-	void SaveFile(string FileName) //Наверное, расширение файла не нужно, но тут как бы тонкая грань, поэтому пусть будет txt. Запись в файл(6)
+	void SaveFile(string FileName) //Наверное, расширение файла не нужно, но тут как бы тонкая грань, поэтому пусть будет txt
 	{
 		ofstream File;
 		File.open(FileName + ".txt");
@@ -68,19 +73,15 @@ public:
 		}
 		File.close();
 	}
-	TransDict ReadFile(string FileName) //Чтение из файла(7)
+	TransDict ReadFile(string FileName)
 	{
 		ifstream File;
 		int i = 0;
 		File.open(FileName + ".txt");
 		TransDict FromFile;
-		string RusWords;
-		string EngWords;
 		while (!File.eof())
 		{
-			File >> EngWords >> RusWords;
-			FromFile.EngWord.push_back(EngWords);
-			FromFile.RusWord.push_back(RusWords);
+			File >> FromFile.EngWord[i] >> FromFile.RusWord[i];
 			i++;
 		}
 		FromFile.WordCount = i;
@@ -97,33 +98,27 @@ int main()
 	int count;
 	string b, c, d;
 	bool Tr;
-//	A.DictPrint();
-	string FileName = "Dictionary1";
+	//	A.DictPrint();
+	string FileName = "Dictionary";
 	count = A.GetWordCount();
 	cout << count << endl;
+	//A.SaveFile(FileName);
+	A.ChangeTranslation("Here", "Тут");
 	A.AddWord("Cat", "Кошка");
-//	A.DictPrint();
-	A.ChangeTranslation("Cat", "Кот");
-	A.AddWord("Rat", "Крыска");
-	A.AddWord("Valentina", "Писанина");
-	A.SaveFile(FileName);
-//	A.DictPrint();
-	b = A.GetTranslation("Cat");
-	cout << b << endl;
+	//	A.DictPrint();
+	b = A.GetTranslation("Here");
+	cout << b << endl;;
+	FileName = "Dictionary1";
+	Tr = A.TranslationCheck("Here");
+	cout << Tr << endl;
 	count = A.GetWordCount();
 	cout << count << endl;
-	FileName = "Dictionary12";
-	Tr = A.TranslationCheck("Cat");
-	cout << Tr << endl;
-//	count = A.GetWordCount();
-//	cout << count << endl;
-//  A.SaveFile(FileName);
+	//  A.SaveFile(FileName);
 	FromFile = A.ReadFile(FileName);
 	Tr = FromFile.TranslationCheck("Beltalowda");
-	b = FromFile.GetTranslation("Dog");
+	b = FromFile.GetTranslation("Beltalowda");
 	cout << b;
 	cout << Tr;
-	cout << FromFile.GetWordCount() << endl;
 	int a;
 	cin >> a;
 	return 0;
