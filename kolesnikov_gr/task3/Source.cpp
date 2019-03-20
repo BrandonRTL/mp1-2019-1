@@ -1,38 +1,33 @@
-#include  <iostream>
+﻿#include  <iostream>
 #include <string>  
 #include <clocale> 
 #include <fstream>
+#include <vector>
 using namespace std;
 class TransDict
 {
-	std::string RusWord[100];
-	std::string EngWord[100];
-	int WordCount = 0;
+	vector<string> RusWord;
+	vector<string> EngWord;
+	int WordCount;
 public:
 	TransDict()
 	{
-		EngWord[0] = "No";
-		EngWord[1] = "Words";
-		EngWord[2] = "Here";
-		RusWord[0] = "���";
-		RusWord[1] = "�����";
-		RusWord[2] = "�����";
-		WordCount = 3;
+		WordCount = 0;
 	}
-	/*void DictPrint()
+	/*void DictPrint() // Ìåòîä äëÿ òåñòîâ(!)
 	{
 	for (int i = 0; i < WordCount; i++)
 	{
 	std::cout << EngWord[i] << "-" << RusWord[i] << endl;
 	}
 	}*/
-	void AddWord(string A, string B)
+	void AddWord(string _EngWord, string _RusWord) //Äîáàâëåíèå  ñëîâà(1)
 	{
-		EngWord[WordCount] = A;
-		RusWord[WordCount] = B;
+		EngWord.push_back(_EngWord);
+		RusWord.push_back(_RusWord);
 		WordCount++;
 	}
-	void ChangeTranslation(string _EngWord, string _RusWord)
+	void ChangeTranslation(string _EngWord, string _RusWord) //Èçìåíåíèå ïåðåâîäà(2)
 	{
 		for (int i = 0; i < WordCount; i++)
 		{
@@ -40,7 +35,7 @@ public:
 				RusWord[i] = _RusWord;
 		}
 	}
-	string GetTranslation(string A)
+	string GetTranslation(string A) // Óçíàâàíèå ïåðåâîäà(3)
 	{
 		for (int i = 0; i < WordCount; i++)
 		{
@@ -49,7 +44,7 @@ public:
 		}
 		return "";
 	}
-	bool TranslationCheck(string A)
+	bool TranslationCheck(string A) //Ïðîâåðêà íàëè÷èÿ ïåðåâîäà(4)
 	{
 		bool TransCheck = false;
 		for (int i = 0; i < WordCount; i++)
@@ -59,11 +54,11 @@ public:
 		}
 		return TransCheck;
 	}
-	int GetWordCount()
+	int GetWordCount() //Óçíàòü, ñêîëüêî ñëîâ â  ñëîâàðå(5)
 	{
 		return WordCount;
 	}
-	void SaveFile(string FileName) //��������, ���������� ����� �� �����, �� ��� ��� �� ������ �����, ������� ����� ����� txt
+	void SaveFile(string FileName) //Íàâåðíîå, ðàñøèðåíèå ôàéëà íå íóæíî, íî òóò êàê áû òîíêàÿ ãðàíü, ïîýòîìó ïóñòü áóäåò txt. Çàïèñü â ôàéë(6)
 	{
 		ofstream File;
 		File.open(FileName + ".txt");
@@ -73,15 +68,19 @@ public:
 		}
 		File.close();
 	}
-	TransDict ReadFile(string FileName)
+	TransDict ReadFile(string FileName) //×òåíèå èç ôàéëà(7)
 	{
 		ifstream File;
 		int i = 0;
 		File.open(FileName + ".txt");
 		TransDict FromFile;
+		string RusWords;
+		string EngWords;
 		while (!File.eof())
 		{
-			File >> FromFile.EngWord[i] >> FromFile.RusWord[i];
+			File >> EngWords >> RusWords;
+			FromFile.EngWord.push_back(EngWords);
+			FromFile.RusWord.push_back(RusWords);
 			i++;
 		}
 		FromFile.WordCount = i;
@@ -99,26 +98,32 @@ int main()
 	string b, c, d;
 	bool Tr;
 	//	A.DictPrint();
-	string FileName = "Dictionary";
+	string FileName = "Dictionary1";
 	count = A.GetWordCount();
 	cout << count << endl;
-	//A.SaveFile(FileName);
-	A.ChangeTranslation("Here", "���");
-	A.AddWord("Cat", "�����");
+	A.AddWord("Cat", "Êîøêà");
 	//	A.DictPrint();
-	b = A.GetTranslation("Here");
-	cout << b << endl;;
-	FileName = "Dictionary1";
-	Tr = A.TranslationCheck("Here");
-	cout << Tr << endl;
+	A.ChangeTranslation("Cat", "Êîò");
+	A.AddWord("Rat", "Êðûñêà");
+	A.AddWord("Valentina", "Ïèñàíèíà");
+	A.SaveFile(FileName);
+	//	A.DictPrint();
+	b = A.GetTranslation("Cat");
+	cout << b << endl;
 	count = A.GetWordCount();
 	cout << count << endl;
+	FileName = "Dictionary12";
+	Tr = A.TranslationCheck("Cat");
+	cout << Tr << endl;
+	//	count = A.GetWordCount();
+	//	cout << count << endl;
 	//  A.SaveFile(FileName);
 	FromFile = A.ReadFile(FileName);
 	Tr = FromFile.TranslationCheck("Beltalowda");
-	b = FromFile.GetTranslation("Beltalowda");
+	b = FromFile.GetTranslation("Dog");
 	cout << b;
 	cout << Tr;
+	cout << FromFile.GetWordCount() << endl;
 	int a;
 	cin >> a;
 	return 0;
