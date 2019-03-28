@@ -16,6 +16,8 @@ class Thermometr
 	int InitialMonth;
 	int InitialDay;
 	int InitialHour;
+	int InitialDateScore;
+	int MaxDates[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
 public:
 	Thermometr(int _year = 2012, int _month = 11, int _day = 21, int _hour = 13)
 	{
@@ -23,6 +25,7 @@ public:
 		InitialMonth = _month;
 		InitialDay = _day;
 		InitialHour = _hour;
+		InitialDateScore = InitialHour + 24 * InitialDay + 24 * 31 * InitialMonth + 24 * 31 * 12 * InitialYear;
 	}
 	void SetInitialDate(int _year, int _month, int _day, int _hour); // 1)
 	void GetInitialDate(int &_Year, int &_Month, int &_Day, int &_Hour); //2)
@@ -34,7 +37,7 @@ public:
 	double AllTimeAverageTemp(); //6.3)
 	double AverageDay≈imeTemp(int _year, int _month); //7.1)
 	double AverageNight≈imeTemp(int _year, int _month); //7.2)
-	void SaveFile(string FileName);
+	void SaveFile(string FileName); // 8)
 	Thermometr ReadFromFile(string FileName)
 	{
 		ifstream File;
@@ -50,14 +53,24 @@ public:
 		{
 			File >> _year >> _month >> _day >> _hour >> _temperature;
 			Year.push_back(_year);
-			Month.push_back(_month);
-			Day.push_back(_day);
+			Month.push_back(_month - 1);
+			Day.push_back(_day - 1);
 			Hour.push_back(_hour);
 			Temperature.push_back(_temperature);
 			i++;
 		}
 		File.close();
 		return FromFile;
+	}
+	void DateCheck(int _year, int _month, int _day, int _hour)
+	{
+		if ((_month < 0) || (_month > 11))
+			throw 123;
+		if ((_day<0) || (_day>MaxDates[_month]))
+			throw 123;
+		if ((InitialDateScore < _hour + 24 * _day + 24 * 31 * _month + 24 * 31 * 12 * _year) ||
+			(InitialDateScore > _hour + 24 * _day + 24 * 31 * _month + 24 * 31 * 12 * (_year + 1)))
+			throw 123;
 	}
 	void Print(); // 4 testing
 	void  PrintSize(); // I SAID IT IS FOR TESTING !!!!!
@@ -69,6 +82,7 @@ void Thermometr::SetInitialDate(int _year, int _month, int _day, int _hour)
 	InitialMonth = _month;
 	InitialDay = _day;
 	InitialHour = _hour;
+	InitialDateScore = InitialHour + 24 * InitialDay + 24 * 31 * InitialMonth + 24 * 31 * 12 * InitialYear;
 }
 void Thermometr::GetInitialDate(int &_Year, int &_Month, int &_Day, int &_Hour)
 {
@@ -191,7 +205,7 @@ double Thermometr::AverageNight≈imeTemp(int _year, int _month)
 void Thermometr::Print()
 {
 	for (int i = 0; i < Temperature.size(); i++)
-		cout << Year[i] << " " << Month[i] << " " << Day[i] << " " << Hour[i] << " " << Temperature[i] << "Degrees" << endl;
+		cout << Year[i] << " " << Month[i] + 1 << " " << Day[i] + 1 << " " << Hour[i] << " " << Temperature[i] << "Degrees" << endl;
 }
 void Thermometr::PrintSize()
 {
@@ -203,7 +217,7 @@ void Thermometr::SaveFile(string FileName)
 	File.open(FileName + ".txt");
 	for (int i = 0; i < Temperature.size(); i++)
 	{
-		File << Year[i] << " " << Month[i] << " " << Day[i] << " " << Hour[i] << " " << Temperature[i] << endl;
+		File << Year[i] << " " << Month[i] + 1 << " " << Day[i] + 1 << " " << Hour[i] << " " << Temperature[i] << endl;
 	}
 	File.close();
 }
