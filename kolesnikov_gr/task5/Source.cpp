@@ -23,14 +23,36 @@ public:
 		DepositAmount.push_back(0);
 		IncreasedAmount.push_back(0);
 		Password.push_back("123");
-		HasDeposit.push_back(0);
+		HasDeposit.push_back(false);
 		Nmb.push_back(1);
 		Name.push_back("Andrew Wiggin");
 		PayRollAmount.push_back(6000000);
 		DepositAmount.push_back(0);
 		IncreasedAmount.push_back(0);
 		Password.push_back("123");
-		HasDeposit.push_back(0);
+		HasDeposit.push_back(false);
+	}
+	void Registration(int _nmb, string _name, long int _pay, string _password)
+	{
+		for (int i = 0; i < Nmb.size(); i++)
+		{
+			if (_nmb == Nmb[i])
+			{
+				cout << "Already registered";
+				//return;
+			}
+		}
+		if (_password.length() < 3)
+			throw 123;
+		Nmb.push_back(_nmb);
+		Name.push_back(_name);
+		PayRollAmount.push_back(_pay);
+		DepositAmount.push_back(0);
+		IncreasedAmount.push_back(0);
+		Password.push_back(_password);
+		HasDeposit.push_back(false);
+
+
 	}
 	int GetSize()
 	{
@@ -59,6 +81,12 @@ public:
 	string GetName(int i)
 	{
 		return Name[i];
+	}
+	void SetPassWord(int i, string _password)
+	{
+		if (_password.length() < 3)
+			throw 123;
+		Password[i] = _password;
 	}
 	void SetPay(int i, int _pay)
 	{
@@ -97,7 +125,7 @@ public:
 	{
 		if (_password == PC.GetPassword(_Number))
 		{
-			IsLoggedIn = 1;
+			IsLoggedIn = true;
 			CurrentAccount = _Number;
 			cout << "Hello, mr(s) " << PC.GetName(CurrentAccount) << endl;
 		}
@@ -108,9 +136,9 @@ public:
 	}
 	void Show_AvailableDeposits() //2)
 	{
-		if (IsLoggedIn == 0)
+		if (IsLoggedIn == false)
 			throw 123;
-		if (IsLoggedIn == 1)
+		if (IsLoggedIn == true)
 		{
 			cout << "Now you have " << PC.GetPay(CurrentAccount) << endl;
 			cout << "Avaliable deposits for you:" << endl;
@@ -135,7 +163,7 @@ public:
 	}
 	bool DepositOpenCheck() //3)
 	{
-		if (IsLoggedIn == 1)
+		if (IsLoggedIn == true)
 		{
 			return PC.GetOpenCheck(CurrentAccount);
 		}
@@ -143,7 +171,7 @@ public:
 	}
 	void OpenDeposit(int time, int money)//4)
 	{
-		if (IsLoggedIn == 0)
+		if (IsLoggedIn == false)
 			throw 123;
 		if (DepositOpenCheck() == true)
 			throw 321;
@@ -211,7 +239,7 @@ public:
 	}
 	int DepositStatus()  //5)
 	{
-		if (IsLoggedIn == 0)
+		if (IsLoggedIn == false)
 			throw 123;
 		if (DepositOpenCheck() == false)
 			throw 321;
@@ -219,7 +247,7 @@ public:
 	}
 	void WithDraw()//6)
 	{
-		if (IsLoggedIn == 0)
+		if (IsLoggedIn == false)
 			throw 123;
 		if (DepositOpenCheck() == false)
 			throw 321;
@@ -228,7 +256,7 @@ public:
 	}
 	void DepositClose(int CurrentTime)//7)
 	{
-		if (IsLoggedIn == 0)
+		if (IsLoggedIn == false)
 			throw 123;
 		if (DepositOpenCheck() == false)
 			throw 321;
@@ -240,8 +268,6 @@ public:
 		PC.SetDepositOpen(CurrentAccount, false);
 	}
 };
-
-
 int main()
 {
 	ProcessingCtr ABC;
@@ -251,6 +277,8 @@ int main()
 	bool av = BAC.DepositOpenCheck();
 	cout << endl << av;
 	BAC.OpenDeposit(6, 1000);
+	av = BAC.DepositOpenCheck();
+	cout << endl << av;
 	int q, w, e, r, t, y;
 	e = BAC.DepositStatus();
 	BAC.DepositClose(13);
