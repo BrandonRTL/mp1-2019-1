@@ -269,7 +269,7 @@ public:
 	}
 	void TimeMachine(int months)
 	{
-		PC.SetPercent(CurrentAccount, PC.GetPercent(CurrentAccount) + months / 12 * CurrentPercent);
+		PC.SetPercent(CurrentAccount, PC.GetPercent(CurrentAccount) + months / 12 * CurrentPercent*PC.GetDeposit(CurrentAccount));
 	}
 };
 int main()
