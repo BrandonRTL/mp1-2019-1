@@ -267,6 +267,10 @@ public:
 		PC.SetPercent(CurrentAccount, 0);
 		PC.SetDepositOpen(CurrentAccount, false);
 	}
+	void TimeMachine(int months)
+	{
+		PC.SetPercent(CurrentAccount, PC.GetPercent(CurrentAccount) + months / 12 * CurrentPercent);
+	}
 };
 int main()
 {
