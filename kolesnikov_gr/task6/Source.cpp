@@ -107,7 +107,7 @@ void main()
 	BnC Game;
 	bool win = 0;
 	int length = 5;
-	cout << "Lenght";
+	cout << "Enter the Lenght";
 	cin >> length;
 	Game.SetLenght(length);
 	Game.SetNumber();
