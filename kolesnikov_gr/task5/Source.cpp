@@ -5,9 +5,11 @@
 #include <vector> 
 #include <fstream>
 #include "Deposit.h"
+ProcessingCtr &Deposit::PC = ProcessingCtr();
 int main()
 {
 	ProcessingCtr ABC;
+	Deposit::ConnectPrCtr(ABC);
 	Deposit BAC(ABC);
 	BAC.Log_In(1, "123");
 	BAC.Show_AvailableDeposits();

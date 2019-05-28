@@ -24,7 +24,7 @@ void ProcessingCtr::Registration(int _nmb, string _name, long int _pay, string _
 		if (_nmb == Nmb[i])
 		{
 			cout << "Already registered";
-			//return;
+			break;
 		}
 	}
 	if (_password.length() < 3)
@@ -36,8 +36,6 @@ void ProcessingCtr::Registration(int _nmb, string _name, long int _pay, string _
 	IncreasedAmount.push_back(0);
 	Password.push_back(_password);
 	HasDeposit.push_back(false);
-
-
 }
 int ProcessingCtr::GetSize()
 {

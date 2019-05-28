@@ -2,7 +2,7 @@
 #include "ProcessingCtr.h"
 class Deposit
 {
-	ProcessingCtr PC;
+	static ProcessingCtr &PC;
 	bool IsLoggedIn;
 	double Percent100K[5] = { 1.2, 1.4, 1.7, 2.1 , 2.2 };
 	double Percent100_500K[5] = { 1.8, 2.3,2.5, 2.7 , 3.0 };
@@ -12,7 +12,11 @@ class Deposit
 	int CurrentAccount;
 	int DepositOpenTime;
 public:
-	Deposit(ProcessingCtr Centr);
+	static void ConnectPrCtr(ProcessingCtr _PC)
+	{
+		Deposit::PC = _PC;
+	}
+	Deposit(ProcessingCtr _PC);
 	void Log_In(int _Number, string _password);
 	void Show_AvailableDeposits();
 	bool DepositOpenCheck();
@@ -22,3 +26,4 @@ public:
 	void DepositClose(int CurrentTime);
 	void TimeMachine(int months);
 };
+

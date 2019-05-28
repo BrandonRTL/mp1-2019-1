@@ -1,8 +1,7 @@
 #include "Deposit.h"
-
     Deposit::Deposit(ProcessingCtr Centr)
 	{
-		PC = Centr;
+
 	}
 	void Deposit::Log_In(int _Number, string _password) //1)
 	{
