@@ -1,8 +1,5 @@
 #include "Deposit.h"
-    Deposit::Deposit(ProcessingCtr Centr)
-	{
 
-	}
 	void Deposit::Log_In(int _Number, string _password) //1)
 	{
 		if (_password == PC.GetPassword(_Number))

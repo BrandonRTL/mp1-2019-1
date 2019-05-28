@@ -16,7 +16,6 @@ public:
 	{
 		Deposit::PC = _PC;
 	}
-	Deposit(ProcessingCtr _PC);
 	void Log_In(int _Number, string _password);
 	void Show_AvailableDeposits();
 	bool DepositOpenCheck();

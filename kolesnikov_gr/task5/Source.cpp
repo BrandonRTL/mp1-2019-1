@@ -10,7 +10,7 @@ int main()
 {
 	ProcessingCtr ABC;
 	Deposit::ConnectPrCtr(ABC);
-	Deposit BAC(ABC);
+	Deposit BAC;
 	BAC.Log_In(1, "123");
 	BAC.Show_AvailableDeposits();
 	bool av = BAC.DepositOpenCheck();
